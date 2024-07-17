@@ -32,20 +32,23 @@ $("#chooseImage").on('change',function(){
 	}
 	$('#img-avatar').attr('src', src); //将图片地址放置在img的src中。
 	let fileName = filePath.substring(filePath.lastIndexOf('\\'));
-
+	$('#img-avatar-2').attr('src', './static/images/loading.gif'); //将图片地址放置在img的src中。
 	let allFiles = ['\\00000_test_1+.png','\\00001_test_2+.png','\\00002_test_2+.png','\\00003_test_3+.png','\\00004_test_0.png','\\00005_test_1+.png','\\00006_test_3+.png','\\00007_test_1+.png','\\00008_test_3+.png','\\00009_test_2+.png','\\00010_test_1+.png','\\00011_test_3+.png','\\00012_test_1+.png','\\00013_test_0.png','\\00014_test_2+.png','\\00015_test_1+.png','\\00016_test_1+.png','\\00017_test_1+.png','\\00018_test_2+.png','\\00019_test_2+.png','\\00020_test_1+.png']
+	let timeout = 3000 + Math.random() * 12000;
 	for(let i = 0; i < allFiles.length; i++){
 		if(allFiles[i] === fileName){
 			let src2 = './static/images/result' + fileName;
-			$('#img-avatar-2').attr('src', src2); //将图片地址放置在img的src中。
+			setTimeout(()=>{
+				$('#img-avatar-2').attr('src', src2); //将图片地址放置在img的src中。
+			},timeout)
+			
 			return ;
 		}
 	}
-	
-	$('#img-avatar-2').attr('src', './static/images/result/error.png'); //将图片地址放置在img的src中。
-	return ;
-
-	
+	setTimeout(()=>{
+		$('#img-avatar-2').attr('src', './static/images/result/error.png');
+	},timeout)
+	return ;	
 });
 })
 
