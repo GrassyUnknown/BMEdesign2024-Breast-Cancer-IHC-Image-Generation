@@ -21,7 +21,6 @@ $("#chooseImage").on('change',function(){
 	let filePath = $(this).val(); //获取到input的value，里面是文件的路径
 	
 	let fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(); //获取文件后缀
-
 	let src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
 
 	// 检查是否是图片
@@ -33,21 +32,20 @@ $("#chooseImage").on('change',function(){
 	$('#img-avatar').attr('src', src); //将图片地址放置在img的src中。
 	let fileName = filePath.substring(filePath.lastIndexOf('\\'));
 	$('#img-avatar-2').attr('src', './static/images/loading.gif'); //将图片地址放置在img的src中。
-	let allFiles = ['\\00000_test_1+.png','\\00001_test_2+.png','\\00002_test_2+.png','\\00003_test_3+.png','\\00004_test_0.png','\\00005_test_1+.png','\\00006_test_3+.png','\\00007_test_1+.png','\\00008_test_3+.png','\\00009_test_2+.png','\\00010_test_1+.png','\\00011_test_3+.png','\\00012_test_1+.png','\\00013_test_0.png','\\00014_test_2+.png','\\00015_test_1+.png','\\00016_test_1+.png','\\00017_test_1+.png','\\00018_test_2+.png','\\00019_test_2+.png','\\00020_test_1+.png']
-	let timeout = 3000 + Math.random() * 12000;
-	for(let i = 0; i < allFiles.length; i++){
-		if(allFiles[i] === fileName){
-			let src2 = './static/images/result' + fileName;
-			setTimeout(()=>{
-				$('#img-avatar-2').attr('src', src2); //将图片地址放置在img的src中。
-			},timeout)
-			
-			return ;
+	var pic1 = this.files[0];
+    var formData = new FormData();
+    formData.append('file',pic1);
+	let xhr = new XMLHttpRequest();
+	xhr.open('post','http://60.205.127.51:7890/getpic' , true);
+	xhr.responseType = 'blob' ;
+	xhr.send(formData);// 发送ajax请求
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState === XMLHttpRequest.DONE) {
+			console.log(xhr.response);
+			let src = window.URL.createObjectURL(new File([xhr.response],"output.png",{type: "image/png"})); //转成可以在本地预览的格式
+			$('#img-avatar-2').attr('src', src); //将图片地址放置在img的src中。
 		}
-	}
-	setTimeout(()=>{
-		$('#img-avatar-2').attr('src', './static/images/result/error.png');
-	},timeout)
+	};
 	return ;	
 });
 })
