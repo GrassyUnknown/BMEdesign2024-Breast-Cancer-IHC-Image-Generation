@@ -18,6 +18,10 @@
 
 - details.html 项目内容详情网页
 
+- header.html 顶部导航
+
+- footer.html 页脚
+
 - static/js 网页所使用的js脚本
 
 - static/css 网页UI所依赖的CSS风格文件
